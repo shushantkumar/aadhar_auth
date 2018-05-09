@@ -15,9 +15,8 @@ import sys
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-AUTH_USER_PROFILE='django_auth_aadhaar.AadhaarUserProfile'
-AUTHENTICATION_BACKENDS=('django_auth_aadhaar.backend.AadhaarBackend',)
-AADHAAR_CONFIG_FILE='...fixtures/auth.cfg' 
+# AUTHENTICATION_BACKENDS=('django_auth_aadhaar.backend.AadhaarBackend',)
+# AADHAAR_CONFIG_FILE='...fixtures/auth.cfg' 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -30,7 +29,9 @@ TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = ['*']
 
-
+import logging
+logging.basicConfig()
+logging.getLogger().setLevel(logging.DEBUG)
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_auth_aadhaar',
-    'auth'
+    # 'auth'
 ]
 
 MIDDLEWARE = [
@@ -72,6 +73,8 @@ TEMPLATES = [
     },
 ]
 
+AUTH_USER_PROFILE='django_auth_aadhaar.AadhaarUserProfile'
+
 AUTHENTICATION_BACKENDS = [     
     'django_auth_aadhaar.backend.AadhaarBackend',
     #'django.contrib.auth.backends.RemoteUserBackend',
@@ -81,7 +84,7 @@ AUTHENTICATION_BACKENDS = [
 WSGI_APPLICATION = 'aadhar_auth.wsgi.application'
 
 AUTH_PROFILE_MODULE='django_auth_aadhaar.AadhaarUserProfile' 
-AADHAAR_CONFIG_FILE=BASE_DIR('fixtures/auth.cfg')
+AADHAAR_CONFIG_FILE=os.path.join(BASE_DIR,'fixtures/auth.cfg')
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
@@ -110,9 +113,7 @@ LOGGING = {
     }
 }
 
-import logging
-logging.basicConfig()
-logging.getLogger().setLevel(logging.DEBUG)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
