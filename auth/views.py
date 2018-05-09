@@ -34,7 +34,8 @@ def login_user(request):
             state = "Your username and/or password were incorrect."
     
     f = AadhaarAuthForm() 
-    return render_to_response('auth/auth.html',
-                              {'state':state, 'form': f},
-                              context_instance=RequestContext(request))
+    # return render_to_response('auth/auth.html',{'state':state, 'form': f},context_instance=RequestContext(request))
+    context = {'state':state, 'form': f}
+    return render(request,'auth/auth.html',context)
+
 # Create your views here.
