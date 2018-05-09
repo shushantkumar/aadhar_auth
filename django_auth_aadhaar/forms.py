@@ -27,9 +27,9 @@ class AadhaarAuthForm(forms.Form):
         )
 
     def __init__(self, *args, **kwargs):
-        print "AadhaarAuthForm detail = "
-        print "kwargs = ", kwargs
-        print "args = ", args 
+        print ("AadhaarAuthForm detail = ")
+        print ("kwargs = ", kwargs)
+        print ("args = ", args) 
         try: 
             detail = kwargs.pop('detail', None)
             if (detail not in ['personal', 'address', 'all']):
@@ -135,7 +135,7 @@ class AadhaarAuthForm(forms.Form):
             raise forms.ValidationError("Please select one or more attributes")
         
         attributes = self.cleaned_data['aadhaar_attributes']
-        print "Attributes selected = ", attributes
+        print ("Attributes selected = ", attributes)
         for attr_name in attributes: 
             if not self.cleaned_data.has_key(attr_name):
                 raise forms.ValidationError("Please enter valid data for %s " % attr_name)
@@ -164,9 +164,9 @@ class AadhaarAuthForm(forms.Form):
                 ('aadhaar_pa_match' not in match_strategies)):
                 match_strategies += ['aadhaar_pa_match'] 
 
-        print "match strategies = ", match_strategies 
+        print ("match strategies = ", match_strategies) 
         attributes += match_strategies 
-        print "after adding match_strategies ", attributes 
+        print ("after adding match_strategies ", attributes) 
         for attribute in attributes:
             humanized_attribute = AadhaarAuthForm.humanize(attribute) 
             if ((not self.cleaned_data.has_key(attribute)) or 

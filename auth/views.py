@@ -11,7 +11,7 @@ def login_user(request):
     
     # Whats in DB? 
     users = User.objects.all() 
-    print "All users = ", users 
+    print ("All users = ", users) 
 
     # Clean data from 
     if request.POST:
@@ -22,7 +22,7 @@ def login_user(request):
         for k,v in credentials.iteritems():
             if k.startswith('aadhaar'):
                 auth_params[k] = v
-        print auth_params 
+        print (auth_params) 
         user = auth.authenticate(**auth_params) 
         if user is not None:
             if user.is_active:
@@ -34,7 +34,7 @@ def login_user(request):
             state = "Your username and/or password were incorrect."
     
     f = AadhaarAuthForm() 
-    return render_to_response('auth.html',
+    return render_to_response('auth/auth.html',
                               {'state':state, 'form': f},
                               context_instance=RequestContext(request))
 # Create your views here.
