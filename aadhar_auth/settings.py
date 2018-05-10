@@ -82,7 +82,7 @@ AUTHENTICATION_BACKENDS = [
     ]
 
 WSGI_APPLICATION = 'aadhar_auth.wsgi.application'
-
+# AUTH_USER_MODEL = 'django_auth_aadhaar.AadhaarUserProfile'
 AUTH_PROFILE_MODULE='django_auth_aadhaar.AadhaarUserProfile' 
 AADHAAR_CONFIG_FILE=os.path.join(BASE_DIR,'fixtures/auth.cfg')
 # Database
