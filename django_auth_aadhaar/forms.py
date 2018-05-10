@@ -2,7 +2,7 @@ from django import forms
 
 class AadhaarAuthForm(forms.Form):
 
-    PII_ATTRIBUTES=(
+    PII_ATTRIBUTES=[
         ('aadhaar_pi_match', "PII Match Strategy"),
         ("aadhaar_name", "Name"),
         ('aadhaar_dob', "Date of Birth"),
@@ -10,8 +10,8 @@ class AadhaarAuthForm(forms.Form):
         ('aadhaar_gender',"Gender"), 
         ('aadhaar_email', "Email"),
         ('aadhaar_phone', "Phone"),
-        )
-    PA_ATTRIBUTES=(
+        ]   
+    PA_ATTRIBUTES=[
         ('aadhaar_pa_match', "PA Match Strategy"),
         ('aadhaar_co', "Care of"),
         ('aadhaar_house', "House"),
@@ -24,7 +24,7 @@ class AadhaarAuthForm(forms.Form):
         ('aadhaar_state', "State"),
         ('aadhaar_pincode', "Pincode"),
         ('aadhaar_postoffice', "Post Office"),
-        )
+        ]
 
     def __init__(self, *args, **kwargs):
         print ("AadhaarAuthForm detail = ")

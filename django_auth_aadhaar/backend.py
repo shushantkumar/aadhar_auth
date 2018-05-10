@@ -3,9 +3,9 @@
 # Uncomment these for testing
 import os, sys 
 here = lambda path: os.path.join(os.path.dirname(os.path.realpath(__file__)), path)
-sys.path.insert(0,here('../../pyAadhaarAuth'))
-sys.path.insert(0,here('../examples'))
-os.environ['DJANGO_SETTINGS_MODULE'] = 'authextend.settings'
+sys.path.insert(0,here('../pyAadhaarAuth'))
+sys.path.insert(0,here('../'))
+os.environ['DJANGO_SETTINGS_MODULE'] = 'aadhar_auth.settings'
 
 
 from django.db import models
