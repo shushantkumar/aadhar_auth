@@ -27,8 +27,8 @@ log = logging.getLogger("AadhaarBackend")
 class AadhaarBackend(backends.ModelBackend):
 
     def authenticate(self, **credentials):
-        print "AadhaarBackend.authenticate()" 
-        print "Credentials = ", credentials 
+        print ("AadhaarBackend.authenticate()" )
+        print ("Credentials = ", credentials )
         try: 
             aadhaar_id = credentials['aadhaar_id']
         except: 
@@ -39,28 +39,28 @@ class AadhaarBackend(backends.ModelBackend):
             aadhaar_user = AadhaarBackendHelper(self, aadhaar_id=aadhaar_id)
             user = None 
             try: 
-                print "Type of aadhaar_user = ", type(aadhaar_user)
+                print ("Type of aadhaar_user = ", type(aadhaar_user))
                 user = aadhaar_user.authenticate(credentials)
             except: 
-                print "Caught exception" 
+                print ("Caught exception" )
                 traceback.print_exc() 
                 pass 
-            print "Authenticated with aadhaar" 
+            print ("Authenticated with aadhaar" )
             return user
         except:
-            print "Authentication failed" 
+            print ("Authentication failed") 
             traceback.print_exc() 
             return None
         
 
     def get_user(self, user_id):
-        print "AadhaarBackend.get_user() user_id = ",user_id
+        print ("AadhaarBackend.get_user() user_id = ",user_id)
         user = None
         try:
             user = self.user_class.objects.get(pk=user_id)
         except self.user_class.DoesNotExist:
             pass
-        print "AadhaarBackend.get_user() returning user = ",user
+        print ("AadhaarBackend.get_user() returning user = ",user)
         return user 
 
     @property
@@ -77,22 +77,22 @@ class AadhaarBackendHelper(object):
     _user = None 
 
     def __init__(self, backend, aadhaar_id, user=None):
-        print "AadhaarBackendHelper.init()"
+        print ("AadhaarBackendHelper.init()")
         self._aadhaar_id = aadhaar_id 
     
         if user is not None: 
             self._set_authenticated_user(user) 
 
     def _set_authenticated_user(self, user): 
-        print "AadhaarBackendHelper.set_authenticated_user()"
+        print ("AadhaarBackendHelper.set_authenticated_user()")
         profile = user.get_profile() 
         if attr == None: 
-            print "Setting attr on ", user 
+            print ("Setting attr on ", user )
             setattr(profile, 'aadhaar_id', self._aadhaar_id)         
             profile.save() 
         else:
-            print "Found attr ", getattr(profile, 'aadhaar_id'), \
-                "for user ", user
+            print ("Found attr ", getattr(profile, 'aadhaar_id'), \
+                            "for user ", user)
         self._user = user 
 
     def authenticate_with_aadhaar(self, cfg, credentials): 
@@ -138,7 +138,7 @@ class AadhaarBackendHelper(object):
         return req.is_successful()
             
     def authenticate(self, credentials):         
-        print "AadhaarBackendHelper.authenticate()", credentials 
+        print ("AadhaarBackendHelper.authenticate()", credentials )
         
         # Check if the user exists in the database 
         user = None 
@@ -152,9 +152,9 @@ class AadhaarBackendHelper(object):
             cfg = aadhaar_settings.get_cfg() 
             authenticated = self.authenticate_with_aadhaar(cfg, credentials) 
         except: 
-            print "Authentication unsuccessful" 
+            print ("Authentication unsuccessful" )
             if user != None: 
-                print "Returning without creating user" 
+                print( "Returning without creating user" )
                 # Dont create user 
                 return None 
 
@@ -173,26 +173,26 @@ class AadhaarBackendHelper(object):
                     profile.num_successful_authentications += 1 
                     profile.save() 
                     
-                    print "Created user ", user, " with profile ", profile 
+                    print ("Created user ", user, " with profile ", profile) 
                 else: 
-                    print "Returning without creating user" 
+                    print ("Returning without creating user" )
                     return None
             except: 
                 traceback.print_exc() 
-                print "Exception in AadhaarBackendHelper.authenticate()" 
+                print ("Exception in AadhaarBackendHelper.authenticate()" )
                 pass 
         else: 
             # user exists in the db. Authentication may have succeeded or 
             # failed. 
-            print "User exists" 
+            print ("User exists" )
             try: 
                 profile = user.get_profile() 
             except: 
                 # doesnt exist for some reason. Why? 
-                print "Creating profile. Check why this has come here" 
+                print ("Creating profile. Check why this has come here") 
                 profile = AadhaarUserProfile.objects.create(user=user) 
 
-            print "Profile before updating = ", profile.__dict__
+            print ("Profile before updating = ", profile.__dict__)
             # Update the stats 
             if authenticated: 
                 profile.last_successful_authentication = datetime.now()
@@ -201,7 +201,7 @@ class AadhaarBackendHelper(object):
                 profile.last_unsuccessful_authentication = datetime.now()
                 profile.num_unsuccessful_authentications += 1 
             profile.save() 
-            print "Profile before updating = ", profile.__dict__
+            print ("Profile before updating = ", profile.__dict__)
 
         # The user may exist but the authentication may have
         # failed. So we keep track of it 
